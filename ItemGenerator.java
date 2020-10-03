@@ -10,7 +10,7 @@ public class ItemGenerator {
         try {
             Scanner read = new Scanner(new File("ItemList.txt"));
             
-            while(read.hasNext()) {
+            while(read.hasNextLine()) {
                 String line = read.nextLine();
                 String [] token = line.split("\n");
                 itemList.add(new Item(token[0]));
