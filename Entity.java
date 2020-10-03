@@ -36,7 +36,8 @@ public class Entity {
     @Override
     public String toString() {
         String s = "";
-        //figure out what you need here
+        s += name;
+        s += "\nHP: " + hp + "/" + maxHp;
         return s;
     }
 }
