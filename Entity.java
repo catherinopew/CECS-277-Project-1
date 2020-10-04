@@ -5,7 +5,7 @@ public class Entity {
 
     public Entity(String n, int mHp) {
         name = n;
-        mHp = maxHp;
+        maxHp = mHp;
     }
 
     //abstract String attack(Entity e)
