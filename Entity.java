@@ -24,8 +24,10 @@ public class Entity {
     }
 
     public void heal(int h) {
-        int heal = 0;
-        heal = hp + h;
+        hp += h;
+        if (hp > maxHp) {
+            hp = maxHp;
+        }
     }
 
     public void takeDamage(int h) {
