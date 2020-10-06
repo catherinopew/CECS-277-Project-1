@@ -1,5 +1,5 @@
 
-public class Point {
+public class MyPoint {
 
 
 	//instance variable
