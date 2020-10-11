@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Hero extends Entity {
+public class Hero extends Entity implements Magical {
     private ArrayList <Item> items = new ArrayList <Item> ();
     private Map map; 
     private Point location;
@@ -14,8 +14,9 @@ public class Hero extends Entity {
     @Override
     public String attack(Entity e) {
         Random rand = new Random();
-        int damage = rand.nextInt(15) + 1;
+        int damage = rand.nextInt(5) + 1;
         e.takeDamage(damage);
+
         return getName() + "attacks" + e.getName() 
         + "for" + damage + "damage.";
     }
@@ -88,5 +89,66 @@ public class Hero extends Entity {
     public char goWest() {
         location.translate(-1,0);    
         return map.getCharAtLoc(location);
+    }
+
+    /** Randomly chooses a magical attack to attack the enemy
+     * @param e the hero being attacked
+     * @return String the attack message
+     */
+    @Override
+    public String attack(Entity e) {
+        Random rand = new Random();
+        int random = rand.nextInt(3) + 1;
+        if (random == 1) {
+            return magicMissile(e);
+        }
+        else if (random == 2) {
+            return fireball(e);
+        }
+        else {
+            return thunderclap(e);
+        }
+    }
+
+    /** Method to make the hero use a magic missile 
+     * @param e the enemy being attacked
+     * @return String the attack message
+     */
+    @Override
+    public String magicMissile(Entity e) {
+        Random rand = new Random();
+        int damage = rand.nextInt(5) + 1;
+        e.takeDamage(damage);
+
+        return getName() + "hits" + e.getName() + "with a Magic Missle for"
+        + damage + "damage.";
+    }
+
+    /** Method to make the hero use a fireball
+     * @param e the enemy being attacked
+     * @return String the attack message
+     */
+    @Override
+    public String fireball(Entity e) {
+        Random rand = new Random();
+        int damage = rand.nextInt(5) + 1;
+        e.takeDamage(damage);
+
+        return getName() + "hits" + e.getName() + "with a Fireball for"
+        + damage + "damage.";
+    }
+
+    /** Method to make the hero use thunderclap 
+     * @param e the enemy being attacked
+     * @return String the attack message
+     */
+    @Override
+    public String thunderclap(Entity e) {
+        Random rand = new Random();
+        int damage = rand.nextInt(5) + 1;
+        e.takeDamage(damage);
+
+        return getName() + "zaps" + e.getName() + "with Thunderclap for"
+        + damage + "damage.";
     }
 }
