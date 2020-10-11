@@ -91,25 +91,6 @@ public class Hero extends Entity implements Magical {
         return map.getCharAtLoc(location);
     }
 
-    /** Randomly chooses a magical attack to attack the enemy
-     * @param e the hero being attacked
-     * @return String the attack message
-     */
-    @Override
-    public String attack(Entity e) {
-        Random rand = new Random();
-        int random = rand.nextInt(3) + 1;
-        if (random == 1) {
-            return magicMissile(e);
-        }
-        else if (random == 2) {
-            return fireball(e);
-        }
-        else {
-            return thunderclap(e);
-        }
-    }
-
     /** Method to make the hero use a magic missile 
      * @param e the enemy being attacked
      * @return String the attack message
