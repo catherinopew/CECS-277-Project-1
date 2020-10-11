@@ -6,7 +6,7 @@ public class Map {
   //private instance var
   private char [][] map = new char [5][5];
 
-  private boolean [][] revealed = new boolean [][]{};
+  private boolean [][] revealed = new boolean [5][5];
 
   //Constructor 
   public Map() {
