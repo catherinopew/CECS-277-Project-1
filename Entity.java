@@ -66,6 +66,7 @@ public abstract class Entity {
      */
     @Override
     public String toString() {
-        return name + "\nHP: " + hp + "/" + maxHp;
+        return name + "\nHP: " + hp + "/" + maxHp; 
+        // i think this is what it should display?
     }
 }
