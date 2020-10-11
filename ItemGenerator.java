@@ -17,8 +17,7 @@ public class ItemGenerator {
             
             while(read.hasNextLine()) {
                 String line = read.nextLine();
-                String [] token = line.split("\n");
-                itemList.add(new Item(token[0]));
+                itemList.add(new Item(line));
             }
             read.close();
         } 
