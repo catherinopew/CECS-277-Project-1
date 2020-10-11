@@ -1,4 +1,5 @@
 import java.util.Random;
+
 /** Enemy class that extends Entity class */
 public class Enemy extends Entity {
     /** A private instance variable item of type Item */
