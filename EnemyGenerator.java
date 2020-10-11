@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-/** Class EnemyGenerator that generates an enemy */
+/** EnemyGenerator class that generates an enemy */
 public class EnemyGenerator {
     /** A private ArrayList enemyList of type Enemy */
     private ArrayList <Enemy> enemyList = new ArrayList <Enemy> ();
@@ -31,8 +31,7 @@ public class EnemyGenerator {
         }
     }
 
-    /**
-     * Randomly generates an enemy from the ArrayList
+    /** Randomly generates an enemy from the ArrayList
      * @param level the level in which the game is on
      * @return a randomly generated enemy
      */
