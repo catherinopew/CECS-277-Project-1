@@ -1,40 +1,50 @@
 import java.util.ArrayList;
-import java.awt.Point;
+import java.util.Random;
+
 public class Hero extends Entity {
     private ArrayList <Item> items = new ArrayList <Item> ();
     private Map map; 
     private Point location;
 
     public Hero (String n, Map m) {
-        super(n);
+        super(n, 25);
         map = m;
     }
 
     @Override
-    public String toString() {
-        String s = "";
-        s += toString();
-        return s;
+    public String attack(Entity e) {
+        Random rand = new Random();
+        int damage = rand.nextInt(15) + 1;
+        e.takeDamage(damage);
+        return getName() + "attacks" + e.getName() 
+        + "for" + damage + "damage.";
     }
 
     @Override
+    public String toString() {
+        return super.toString(); //prob this but idk
+    }
+
+    //@Override?
     public String itemsToString() {
-        String s = "";
+        String itemString = "Inventory: \n";
         for (int i = 0; i < items.size(); i++) {
-            s += i + ". " + items.get(i) + "\n";
+            itemString += i + ". " + items.get(i) + "\n";
         }
+        return itemString;
     }
 
     public int getNumItems() {
-        int numOfItems = 0;
-        for (int i = 0; i < items.size(); i++) {
-            ++numOfItems;
-        }
-        return numOfItems;
+        return items.size();
     }
 
     public boolean pickUpItem(Item i) {
-
+        boolean pickUp = false;
+        if (items.size() < 5) {
+            items.add(i);
+            pickUp = true;
+        }
+        return pickUp;
     }
 
     public void drinkPotion() {
@@ -53,25 +63,30 @@ public class Hero extends Entity {
                 potion = true;
             }
         }
+        return potion;
     }
 
     public Point getLocation() {
-        return super.getLocation(); //idk
+        return location;
     }
 
     public char goNorth() {
-        Point.translate(0, 1);
+        location.translate(0, 1);    
+        return map.getCharAtLoc(location);
     }
 
     public char goSouth() {
-
+        location.translate(0, -1);    
+        return map.getCharAtLoc(location);
     }
 
     public char goEast() {
-
+        location.translate(1,0);    
+        return map.getCharAtLoc(location);
     }
 
     public char goWest() {
-
+        location.translate(-1,0);    
+        return map.getCharAtLoc(location);
     }
 }
