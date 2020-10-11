@@ -34,7 +34,7 @@ public class EnemyGenerator {
     /**
      * Randomly generates an enemy from the ArrayList
      * @param level the level in which the game is on
-     * @return
+     * @return a randomly generated enemy
      */
     public Enemy generateEnemy(int level) {
         int random = 0;
