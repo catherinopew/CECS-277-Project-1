@@ -21,8 +21,14 @@ public class EnemyGenerator {
             while(read.hasNextLine()) {
                 String line = read.nextLine();
                 String [] token = line.split(",");
-                enemyList.add(new Enemy(token[0], 
-                Integer.parseInt(token[1]), ig.generateItem())); 
+                if (token[2] == "p") {
+                    enemyList.add(new Enemy(token[0], 
+                    Integer.parseInt(token[1]), ig.generateItem())); 
+                }
+                else {
+                    enemyList.add(new MagicalEnemy(token[0], 
+                    Integer.parseInt(token[1]), ig.generateItem())); 
+                }
             }
             read.close();
         } 
