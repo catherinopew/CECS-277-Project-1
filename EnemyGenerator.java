@@ -5,16 +5,17 @@ import java.io.FileNotFoundException;
 
 /** EnemyGenerator class that generates an enemy */
 public class EnemyGenerator {
-    /** A private ArrayList enemyList of type Enemy */
+    /** An ArrayList of the enemies */
     private ArrayList <Enemy> enemyList = new ArrayList <Enemy> ();
-    /** A private instance variable ig of type ItemGenerator */
+    /** A randomly generated item */
     private ItemGenerator ig;
 
     /** Reads from the EnemyList.txt file 
-     * and adds each enemy to the ArrayList
+     * and adds each enemy to the ArrayList, enemyList
      * @param ig item to be generated 
      */
     public EnemyGenerator(ItemGenerator ig) {
+        this.ig = ig;
         try {
             Scanner read = new Scanner(new File("EnemyList.txt"));
             
@@ -39,11 +40,20 @@ public class EnemyGenerator {
 
     /** Randomly generates an enemy from the ArrayList
      * @param level the level in which the game is on
-     * @return a randomly generated enemy
+     * @return Enemy a randomly generated enemy
      */
     public Enemy generateEnemy(int level) {
         int random = 0;
         random = (int)(Math.random() * enemyList.size());
-        return enemyList.get(random);
+        if (enemyList.get(random) instanceof Enemy) {
+            Enemy physical = new Enemy(enemyList.get(random).getName(),
+            enemyList.get(random).getMaxHP(), enemyList.get(random).getItem());
+            return physical;
+        }
+        else {
+            Enemy magical = new MagicalEnemy(enemyList.get(random).getName(),
+            enemyList.get(random).getMaxHP(), enemyList.get(random).getItem());
+            return magical;
+        }
     }
 }
