@@ -49,6 +49,7 @@ public class Hero extends Entity implements Magical {
     }
 
     /** Picks up an item if the inventory isn't full
+     * Gives user option to replace an inventory item if inventory is full
      * @param i the item being picked up
      * @return boolean true if the item is picked up, false otherwise
      */
@@ -58,12 +59,37 @@ public class Hero extends Entity implements Magical {
             items.add(i);
             pickUp = true;
         }
+        else {
+            System.out.println("Your inventory is full. Do you still want " + 
+            "to pick this item up (Y/N)? ");
+            boolean choice = CheckInput.getYesNo();
+            if (choice == true) {
+                System.out.println("Which item number would you like to drop? ");
+                int itemChoice = CheckInput.getIntRange(1, 5);
+                dropItem(itemChoice - 1);
+                items.add(i);
+                System.out.println("You've chosen to drop a " + items.get(itemChoice - 1).getName() 
+                + " and replaced it with " + i.getName());
+                pickUp = true;
+            }
+            else {
+                System.out.println("You've chosen to not replace any of " + 
+                "your inventory items and dropped what you received.");
+            }
+        }
         return pickUp;
     }
 
-    /** The hero drinks the potion */
+    /** The hero drinks the potion 
+     * Once healed, remove potion from the inventory
+     */
     public void drinkPotion() {
         heal(getMaxHP());
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getName() == "Health Potion") {
+                dropItem(i);
+            }
+        }
     }
 
     /** Drops an item if the inventory is full and
@@ -164,8 +190,8 @@ public class Hero extends Entity implements Magical {
         int damage = rand.nextInt(5) + 1;
         e.takeDamage(damage);
 
-        return getName() + "attacks" + e.getName() 
-        + "for" + damage + "damage.";
+        return getName() + " attacks " + e.getName() 
+        + " for " + damage + " damage.";
     }
 
     /** Uses a magic missile on the enemy
@@ -178,8 +204,8 @@ public class Hero extends Entity implements Magical {
         int damage = rand.nextInt(5) + 1;
         e.takeDamage(damage);
 
-        return getName() + "hits" + e.getName() + "with a Magic Missle for"
-        + damage + "damage.";
+        return getName() + " hits " + e.getName() + " with a Magic Missle for "
+        + damage + " damage.";
     }
 
     /** Uses a fireball on the enemy
@@ -192,8 +218,8 @@ public class Hero extends Entity implements Magical {
         int damage = rand.nextInt(5) + 1;
         e.takeDamage(damage);
 
-        return getName() + "hits" + e.getName() + "with a Fireball for"
-        + damage + "damage.";
+        return getName() + " hits " + e.getName() + " with a Fireball for "
+        + damage + " damage.";
     }
 
     /** Uses thunderclap on the enemy
@@ -206,7 +232,7 @@ public class Hero extends Entity implements Magical {
         int damage = rand.nextInt(5) + 1;
         e.takeDamage(damage);
 
-        return getName() + "zaps" + e.getName() + "with Thunderclap for"
-        + damage + "damage.";
+        return getName() + " zaps " + e.getName() + " with Thunderclap for "
+        + damage + " damage.";
     }
 }
