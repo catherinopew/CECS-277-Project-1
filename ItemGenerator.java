@@ -5,11 +5,11 @@ import java.io.FileNotFoundException;
 
 /** ItemGenerator class that generates an item */
 public class ItemGenerator {
-    /** A private ArrayList itemList of type Item */
+    /** An ArrayList of the items */
     private ArrayList <Item> itemList = new ArrayList <Item> ();
 
     /** Reads from the ItemList.txt file 
-     * and adds each item to the ArrayList
+     * and adds each item to the ArrayList, itemList
      */
     public ItemGenerator() {
         try {
@@ -32,6 +32,6 @@ public class ItemGenerator {
     public Item generateItem() {
         int random = 0;
         random = (int)(Math.random() * itemList.size());
-        return itemList.get(random);
+        return new Item(itemList.get(random).getName());
     }
 }
