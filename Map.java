@@ -15,6 +15,7 @@ public class Map {
   public Map() {
     map = new char [5][5];
     revealed = new boolean [5][5];
+    //mapNum = 1;
     for (int i = 0; i < revealed.length; i++) {
       for (int j = 0; j < revealed.length; j++) {
         revealed [i][j] = false;
@@ -27,6 +28,17 @@ public class Map {
    */
   public void loadMap(int mapNum) {
     try {
+      if (mapNum > 3) {
+        if (mapNum % 3 == 1) {
+          mapNum = 1;
+        }
+        else if (mapNum % 3 == 2) {
+          mapNum = 2;
+        }
+        else {
+          mapNum = 3;
+        }
+      }
       Scanner read = new Scanner(new File("Map" + mapNum + ".txt"));
       while (read.hasNext()) {
         String line = read.nextLine();
@@ -63,7 +75,7 @@ public class Map {
         }
         //System.out.print(" ");
       }
-      //System.out.println();
+      System.out.println();
     }
   }
 
