@@ -30,7 +30,7 @@ public class Enemy extends Entity {
         Random rand = new Random();
         int damage = rand.nextInt(7) + 1;
         e.takeDamage(damage);
-        return getName() + "attacks" + e.getName() 
-        + "for" + damage + "damage.";
+        return getName() + " attacks " + e.getName() 
+        + " for " + damage + " damage.";
     }
 }
