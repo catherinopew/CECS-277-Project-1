@@ -14,7 +14,6 @@ public class ItemGenerator {
     public ItemGenerator() {
         try {
             Scanner read = new Scanner(new File("ItemList.txt"));
-            
             while(read.hasNextLine()) {
                 String line = read.nextLine();
                 itemList.add(new Item(line));
@@ -30,8 +29,7 @@ public class ItemGenerator {
      * @return a randomly generated item
      */
     public Item generateItem() {
-        int random = 0;
-        random = (int)(Math.random() * itemList.size());
+        int random = (int)(Math.random() * itemList.size());
         return new Item(itemList.get(random).getName());
     }
 }
