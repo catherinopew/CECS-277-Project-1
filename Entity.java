@@ -1,51 +1,52 @@
 /** Abstract Entity Class that represents an entity */
 public abstract class Entity {
-    /** A private instance variable name of the entity */
+    /** An entity's name */
     private String name;
-    /** A private instance variable max hit points of the entity */
+    /** An entity's max hit points */
     private int maxHp;
-    /** A private instance variable hit points of the entity */
+    /** An entity's current hit points */
     private int hp;
 
     /** Constructs an entity with a name and max hp
-     * @param n the name 
-     * @param mHp the max hit points 
+     * @param n the entity's name 
+     * @param mHp the entity's max hit points 
      */
     public Entity(String n, int mHp) {
         name = n;
         maxHp = mHp;
+        hp = 0;
     }
 
-    /** Returns a message when the entity attacks
+    /** Returns a message when the entity is attacked
      * @param e an entity
-     * @return String the message when an entity attacks 
+     * @return String the message when the entity is attacked 
      */
     public abstract String attack(Entity e);
     
-    /** Returns the name of the entity
-     * @return String the name
+    /** Retrieves the name of the entity
+     * @return String the entity's name
      */
     public String getName() {
         return name;
     }
 
-    /** Returns the hit points of the entity
-     * @return int the hit points
+    /** Retrieves the current hit points of the entity
+     * @return int the entity's hit points
      */
     public int getHP() {
         return hp;
     }
 
     /** Returns the max hit points of the entity
-     * @return int the max hit points
+     * @return int the entity's max hit points
      */
     public int getMaxHP() {
         return maxHp;
     }
 
     /** Heals entity with a certain amount
-     * If the heal exceeds the max hp, set hp to the max hp.
-     * @param h the amount of heal
+     * If the heal exceeds the max hp, set hp to the max hp
+     * @param h the amount of heal given to the entity
      */
     public void heal(int h) {
         hp += h;
@@ -55,18 +56,20 @@ public abstract class Entity {
     }
 
     /** Entity takes a certain amount of damage
-     * @param h the amount of damage
+     * @param h the amount of damage taken by the entity
      */
     public void takeDamage(int h) {
         hp -= h;
+        if (hp < 0) {
+            hp = 0;
+        }
     }
     
     /** Displays the entity's current hp out of max hp 
-     * @return String the current hp out of max hp
+     * @return String the entity's current hp out of max hp
      */
     @Override
     public String toString() {
         return name + "\nHP: " + hp + "/" + maxHp; 
-        // i think this is what it should display?
     }
 }
