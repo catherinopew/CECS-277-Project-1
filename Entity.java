@@ -14,7 +14,7 @@ public abstract class Entity {
     public Entity(String n, int mHp) {
         name = n;
         maxHp = mHp;
-        hp = 0;
+        hp = mHp;
     }
 
     /** Returns a message when the entity is attacked
