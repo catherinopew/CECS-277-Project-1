@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 /** EnemyGenerator class that generates an enemy */
 public class EnemyGenerator {
@@ -11,24 +12,25 @@ public class EnemyGenerator {
     private ItemGenerator ig;
 
     /** Reads from the EnemyList.txt file 
-     * and adds each enemy to the ArrayList, enemyList
+     * Constructs and adds each enemy to the ArrayList, enemyList
      * @param ig item to be generated 
      */
     public EnemyGenerator(ItemGenerator ig) {
         this.ig = ig;
         try {
             Scanner read = new Scanner(new File("EnemyList.txt"));
-            
             while(read.hasNextLine()) {
                 String line = read.nextLine();
                 String [] token = line.split(",");
+                Random rand = new Random(); 
+                int randHealth = rand.nextInt(4) + 1;
                 if (token[2] == "p") {
                     enemyList.add(new Enemy(token[0], 
-                    Integer.parseInt(token[1]), ig.generateItem())); 
+                    Integer.parseInt(token[1]) + randHealth, ig.generateItem())); 
                 }
                 else {
                     enemyList.add(new MagicalEnemy(token[0], 
-                    Integer.parseInt(token[1]), ig.generateItem())); 
+                    Integer.parseInt(token[1]) + randHealth, ig.generateItem())); 
                 }
             }
             read.close();
@@ -43,8 +45,8 @@ public class EnemyGenerator {
      * @return Enemy a randomly generated enemy
      */
     public Enemy generateEnemy(int level) {
-        int random = 0;
-        random = (int)(Math.random() * enemyList.size());
+        int random = (int)(Math.random() * enemyList.size());
+
         if (enemyList.get(random) instanceof Enemy) {
             Enemy physical = new Enemy(enemyList.get(random).getName(),
             enemyList.get(random).getMaxHP(), enemyList.get(random).getItem());
