@@ -1,16 +1,16 @@
 /** Item class to represent an item */
 public class Item {
-    /** A private instance variable that is the name of the item */
+    /** The name of the item */
     private String name;
 
     /** Constructs an item
-     * @param n the item name
+     * @param n the item's name
      */
     public Item(String n) {
         name = n;
     }
 
-    /** Returns the name of the item
+    /** Retrieves the name of the item
      * @return String the item name
      */
     public String getName() {
