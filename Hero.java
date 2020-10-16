@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-/** Hero class that represents a hero */
+/** Hero class that represents a hero 
+ * It extends Entity and implements the Magical interface
+ */
 public class Hero extends Entity implements Magical {
     /** An ArrayList of items that stores the hero's current items */
     private ArrayList <Item> items = new ArrayList <Item> ();
