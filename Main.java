@@ -1,37 +1,69 @@
+import java.util.Random;
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("What is your name, traveler? ");
         String name = CheckInput.getString();
+
         Map map = new Map();
         Hero hero = new Hero(name, map);
-        int choice = 0;
+        ItemGenerator ig = new ItemGenerator();
+        EnemyGenerator eg = new EnemyGenerator(ig);
 
-        for (int level = 0; level < 3; level++) {
-            while(choice != 5 || hero.getHP() != 0) {
-                System.out.println(hero.getName());
-                System.out.println(hero.toString());
-                System.out.println(hero.itemsToString());
+        int choice = 0;
+        int level = 1;
+        while (choice != 5 || hero.getHP() != 0) {
+            System.out.println(hero.getName());
+            System.out.println(hero.toString());
+            System.out.println(hero.itemsToString());
+            map.loadMap(level);
+            map.displayMap(hero.getLocation());
+
+            System.out.println("1. Go North\n2. Go South\n3. Go East\n" +
+            "4. Go West\n5. Quit");
+            choice = CheckInput.getIntRange(1, 5);
+
+            if (choice == 1) { 
+                hero.goNorth();
+            }
+            else if (choice == 2) {
+                hero.goSouth();
+            }
+            else if (choice == 3) {
+                hero.goEast();
+            }
+            else if (choice == 4) {
+                hero.goWest();
+            }
+            else if (choice == 5) {
+                System.out.println("You've chosen to quit. Game over.");
+                break;
+            }
+            //monster room
+            if (monsterRoom(hero, map, eg, level) == true) {
+                Enemy enemy = eg.generateEnemy(level);
+                System.out.println("You've encountered a " + enemy.getName());
+                fight(hero, enemy);
+                if (enemy.getHP() == 0) {
+                    System.out.println("You defeated the " + enemy.getName() + "!");
+                    hero.pickUpItem(enemy.getItem());
+                    System.out.println("You received a " + enemy.getItem().getName() + 
+                    "from its corpse.");
+                }
+            }
+            //item room
+            else if (map.getCharAtLoc(hero.getLocation()) == 'i') {
+                itemRoom(hero, map, ig);
+            }
+            //empty room
+            else if (map.getCharAtLoc(hero.getLocation()) == 'n') {
+                System.out.println("There was nothing here.");
+            }
+            // finish
+            else if (map.getCharAtLoc(hero.getLocation()) == 'f') {
+                level++;
                 map.loadMap(level);
-                map.displayMap(hero.getLocation());
-    
-                System.out.println("1. Go North\n2. Go South\n3. Go East\n" +
-                "4. Go West\n5. Quit");
-                choice = CheckInput.getIntRange(1, 5);
-                if (choice == 1) {
-                    hero.goNorth();
-                }
-                else if (choice == 2) {
-                    hero.goSouth();
-                }
-                else if (choice == 3) {
-                    hero.goEast();
-                }
-                else if (choice == 4) {
-                    hero.goWest();
-                }
-                else if (choice == 5) {
-                    System.out.println("You've chosen to quit. Game over.");
-                }
+                hero.heal(hero.getMaxHP());
             }
         }
         if (hero.getHP() == 0) {
@@ -48,12 +80,9 @@ public class Main {
     }
 
     public static boolean fight(Hero h, Enemy e) {
-        int choice = 0;
-        ItemGenerator ig = new ItemGenerator();
-        // if monsterRoom is true
-        System.out.println("You've encountered a " + e.getName());
         System.out.println(e.getName());
         System.out.println(e.toString());
+        int choice = 0;
 
         if (h.hasPotion() == true) {
             System.out.println("1. Fight\n2. Run Away\n3. Drink Health Potion");
@@ -64,42 +93,98 @@ public class Main {
             choice = CheckInput.getIntRange(1, 2);
         }
 
+        if (e instanceof MagicalEnemy) {
+            e = (MagicalEnemy) e;
+        }
         if (choice == 1) {
             while (e.getHP() > 0) {
                 System.out.println("1. Physical Attack\n2. Magic Attack");
                 choice = CheckInput.getIntRange(1, 2);
                 if (choice == 1) {
-                    h.attack(e);
+                    System.out.println(h.attack(e));
+                    if (e.getHP() != 0) {
+                        System.out.println(e.attack(h));
+                    }
                 }
                 else {
                     System.out.println(Magical.MAGIC_MENU);
                     choice = CheckInput.getIntRange(1, 3);
                     if (choice == 1) {
-                        h.magicMissile(e);
+                        System.out.println(h.magicMissile(e));
+                        if (e.getHP() != 0) {
+                            System.out.println(e.attack(h));
+                        }
                     }
                     else if (choice == 2) {
-                        h.fireball(e);
+                        System.out.println(h.fireball(e));
+                        if (e.getHP() != 0) {
+                            System.out.println(e.attack(h));
+                        }
                     }
                     else {
-                        h.thunderclap(e);
+                        System.out.println(h.thunderclap(e));
+                        if (e.getHP() != 0) {
+                            System.out.println(e.attack(h));
+                        }
                     }
                 }
             }
-            if (e.getHP() == 0) {
-                System.out.println("You defeated the " + e.getName() + "!");
-                System.out.println("You received a " + ig.generateItem() + 
-                "from its corpse.");
+            if (e.getHP() == 0 || h.getHP() == 0) {
+                return false;
+            }
+            else {
+                return true;
             }
         }
         else if (choice == 2) {
-            //you run, so monsterRoom is false?
+            Random rand = new Random();
+            int random = 0;
+
+            if (h.getLocation().getY() == 0 || h.getLocation().getY() == 4) {
+                random = rand.nextInt(2) + 1;
+                if (random == 1) {
+                    h.goNorth();
+                }
+                else {
+                    h.goSouth();
+                }
+            }
+            else if (h.getLocation().getX() == 0 || h.getLocation().getX() == 4) {
+                random = rand.nextInt(2) + 1;
+                if (random == 1) {
+                    h.goEast();
+                }
+                else {
+                    h.goWest();
+                }
+            }
+            else {
+                random = rand.nextInt(4) + 1;
+                if (random == 1) {
+                    h.goNorth();
+                }
+                else if (random == 2) {
+                    h.goSouth();
+                }
+                else if (random == 3) {
+                    h.goEast();
+                }
+                else {
+                    h.goWest();
+                }
+            }
+            return false;
         }
         else {
             h.drinkPotion();
+            return true;
         }
     }
 
     public static void itemRoom(Hero h, Map m, ItemGenerator ig) {
-
+        h.pickUpItem(ig.generateItem());
+        if (h.pickUpItem(ig.generateItem()) == true) {
+            m.removeCharAtLoc(h.getLocation());
+        }
     }
 }
