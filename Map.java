@@ -64,15 +64,15 @@ public class Map {
     for (int i = 0; i < map.length; i++) {
       for (int j = 0; j < map.length; j++) {
         if (i == p.getX() && j == p.getY()) {
-          System.out.print('*' + " ");
+          System.out.print('*');
         }
         else if (revealed[i][j] == true) {
-          System.out.print(map[i][j] + " ");
+          System.out.print(map[i][j]);
         }
         else {
-          System.out.print('x' + " ");
+          System.out.print('x');
         }
-        //System.out.print(" ");
+        System.out.print(" ");
       }
       System.out.println();
     }
@@ -104,6 +104,6 @@ public class Map {
    * @param p the point coordinates of the location
    */
   public void removeCharAtLoc(Point p) {
-    map[p.getX()][p.getY()] = 0;
+    map[p.getX()][p.getY()] = 'n';
   }
 }
