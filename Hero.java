@@ -61,15 +61,15 @@ public class Hero extends Entity implements Magical {
         }
         else {
             System.out.println("Your inventory is full. Do you still want " + 
-            "to pick this item up (Y/N)? ");
+            "to pick up this item (Y/N)? ");
             boolean choice = CheckInput.getYesNo();
             if (choice == true) {
                 System.out.println("Which item number would you like to drop? ");
                 int itemChoice = CheckInput.getIntRange(1, 5);
+                System.out.println("You've chosen to drop " + items.get(itemChoice - 1).getName() 
+                + " and replaced it with " + i.getName());
                 dropItem(itemChoice - 1);
                 items.add(i);
-                System.out.println("You've chosen to drop a " + items.get(itemChoice - 1).getName() 
-                + " and replaced it with " + i.getName());
                 pickUp = true;
             }
             else {
@@ -86,7 +86,7 @@ public class Hero extends Entity implements Magical {
     public void drinkPotion() {
         heal(getMaxHP());
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getName() == "Health Potion") {
+            if (items.get(i).getName().equals("Health Potion")) {
                 dropItem(i);
             }
         }
@@ -106,7 +106,7 @@ public class Hero extends Entity implements Magical {
     public boolean hasPotion() {
         boolean potion = false;
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getName() == "Health Potion") {
+            if (items.get(i).getName().equals("Health Potion")) {
                 potion = true;
             }
         }
@@ -129,8 +129,8 @@ public class Hero extends Entity implements Magical {
             return map.getCharAtLoc(location);
         }
         else {
-            location.translate(-1, 0);  
             map.reveal(location);
+            location.translate(-1, 0);  
             return map.getCharAtLoc(location);
         }
     }
@@ -144,8 +144,8 @@ public class Hero extends Entity implements Magical {
             return map.getCharAtLoc(location);
         }
         else {
-            location.translate(1, 0);  
             map.reveal(location);
+            location.translate(1, 0);  
             return map.getCharAtLoc(location);
         }
     }
@@ -159,8 +159,8 @@ public class Hero extends Entity implements Magical {
             return map.getCharAtLoc(location);
         }
         else {
-            location.translate(0, 1);  
             map.reveal(location);
+            location.translate(0, 1);  
             return map.getCharAtLoc(location);
         }
     }
@@ -170,12 +170,12 @@ public class Hero extends Entity implements Magical {
      * @return char the character at the hero's location on the map
      */
     public char goWest() {
-        if (location.getX() == 0) {
+        if (location.getY() == 0) {
             return map.getCharAtLoc(location);
         }
         else {
-            location.translate(0, -1);  
             map.reveal(location);
+            location.translate(0, -1);  
             return map.getCharAtLoc(location);
         }
     }
