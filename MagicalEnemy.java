@@ -42,8 +42,8 @@ public class MagicalEnemy extends Enemy implements Magical {
         int damage = rand.nextInt(7) + 1;
         e.takeDamage(damage);
 
-        return getName() + "hits" + e.getName() + "with a Magic Missle for"
-        + damage + "damage.";
+        return getName() + " hits " + e.getName() + " with a Magic Missle for "
+        + damage + " damage.";
     }
 
     /** Uses a fireball on the hero
@@ -56,8 +56,8 @@ public class MagicalEnemy extends Enemy implements Magical {
         int damage = rand.nextInt(7) + 1;
         e.takeDamage(damage);
 
-        return getName() + "hits" + e.getName() + "with a Fireball for"
-        + damage + "damage.";
+        return getName() + " hits " + e.getName() + " with a Fireball for "
+        + damage + " damage.";
     }
 
     /** Uses thunderclap on the hero
@@ -70,7 +70,7 @@ public class MagicalEnemy extends Enemy implements Magical {
         int damage = rand.nextInt(7) + 1;
         e.takeDamage(damage);
 
-        return getName() + "zaps" + e.getName() + "with Thunderclap for"
-        + damage + "damage.";
+        return getName() + " zaps " + e.getName() + " with Thunderclap for "
+        + damage + " damage.";
     }
 }
