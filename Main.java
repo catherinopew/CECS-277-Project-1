@@ -50,7 +50,7 @@ public class Main {
                     map.removeCharAtLoc(hero.getLocation());
 
                     if (hero.pickUpItem(enemy.getItem()) == true) {
-                        System.out.println("You received a " + enemy.getItem().getName() + 
+                        System.out.println("You received " + enemy.getItem().getName() + 
                         " from its corpse.");
                     }
                 }
