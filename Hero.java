@@ -34,9 +34,9 @@ public class Hero extends Entity implements Magical {
      * @return String a list of the hero's inventory
      */
     public String itemsToString() {
-        String itemString = "Inventory: \n";
+        String itemString = "Inventory:";
         for (int i = 0; i < items.size(); i++) {
-            itemString += (i + 1) + ". " + items.get(i).getName() + "\n";
+            itemString += "\n" + (i + 1) + ". " + items.get(i).getName();
         }
         return itemString;
     }
@@ -74,7 +74,7 @@ public class Hero extends Entity implements Magical {
             }
             else {
                 System.out.println("You've chosen to not replace any of " + 
-                "your inventory items and dropped what you received.");
+                "your inventory items.");
             }
         }
         return pickUp;
