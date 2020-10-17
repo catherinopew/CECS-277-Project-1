@@ -10,17 +10,11 @@ public class Map {
   private boolean [][] revealed;
 
   /** Constructs a 5 x 5 map and 
-   * Initiliazes all boolean values in revealed to false
+   * Initializes all boolean values in revealed to false
    */
   public Map() {
     map = new char [5][5];
     revealed = new boolean [5][5];
-    //mapNum = 1;
-    for (int i = 0; i < revealed.length; i++) {
-      for (int j = 0; j < revealed.length; j++) {
-        revealed [i][j] = false;
-      }
-    }
   }
 
   /** Reads in the appropriate map file given the map number
@@ -40,9 +34,14 @@ public class Map {
         }
       }
       Scanner read = new Scanner(new File("Map" + mapNum + ".txt"));
-      while (read.hasNext()) {
-        String line = read.nextLine();
-        System.out.println(line);
+      while (read.hasNextLine()) {
+        for (int i = 0; i < map.length; i++) {
+          String line = read.nextLine().replace(" ", "");
+          for (int j = 0; j < map.length; j++) {
+            map[i][j] = line.charAt(j);
+            revealed[i][j] = false;
+          }
+        }
       }
       read.close();
     } catch (FileNotFoundException e) {
@@ -64,14 +63,14 @@ public class Map {
   public void displayMap(Point p) {
     for (int i = 0; i < map.length; i++) {
       for (int j = 0; j < map.length; j++) {
-        if (revealed[i][j] == true) {
-          System.out.print(map[i][j]);
+        if (i == p.getX() && j == p.getY()) {
+          System.out.print('*' + " ");
         }
-        else if (i == p.getX() && j == p.getY()) {
-          System.out.print('*');
+        else if (revealed[i][j] == true) {
+          System.out.print(map[i][j] + " ");
         }
         else {
-          System.out.print('x');
+          System.out.print('x' + " ");
         }
         //System.out.print(" ");
       }
@@ -85,8 +84,8 @@ public class Map {
   public Point findStart() {
     Point start = new Point();
     for (int i = 0; i < map.length; i++) {
-      for (int j = 0; i < map.length; j++) {
-        if (map [i][j] == 's') {
+      for (int j = 0; j < map.length; j++) {
+        if (map[i][j] == 's') {
           start.setLocation(i, j);
         }
       }
@@ -98,7 +97,7 @@ public class Map {
    * @param p the point coordinates of the location
    */
   public void reveal(Point p) {
-    revealed [p.getX()][p.getY()] = true;
+    revealed[p.getX()][p.getY()] = true;
   }
 
   /** Removes a character at a certain location
