@@ -14,7 +14,7 @@ public abstract class Entity {
     public Entity(String n, int mHp) {
         name = n;
         maxHp = mHp;
-        hp = mHp;
+        hp = mHp; //entity starts out with full hp
     }
 
     /** Returns a message when the entity is attacked
@@ -56,6 +56,7 @@ public abstract class Entity {
     }
 
     /** Entity takes a certain amount of damage
+     * If damage takes hp to less than 0, set hp to 0
      * @param h the amount of damage taken by the entity
      */
     public void takeDamage(int h) {
