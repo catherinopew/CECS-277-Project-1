@@ -23,13 +23,14 @@ public class EnemyGenerator {
                 String line = read.nextLine();
                 String [] token = line.split(",");
                 Random rand = new Random(); 
-                int randHealth = rand.nextInt(4) + 1;
-                if (token[2] == "p") {
-                    enemyList.add(new Enemy(token[0], 
+                int randHealth = rand.nextInt(3) + 1;
+
+                if (token[2].equals("m")) { //if the enemy is magical, construct a new magical enemy
+                    enemyList.add(new MagicalEnemy(token[0], 
                     Integer.parseInt(token[1]) + randHealth, ig.generateItem())); 
                 }
-                else {
-                    enemyList.add(new MagicalEnemy(token[0], 
+                else { //otherwise, construct a physical enemy
+                    enemyList.add(new Enemy(token[0], 
                     Integer.parseInt(token[1]) + randHealth, ig.generateItem())); 
                 }
             }
@@ -47,15 +48,15 @@ public class EnemyGenerator {
     public Enemy generateEnemy(int level) {
         int random = (int)(Math.random() * enemyList.size());
 
-        if (enemyList.get(random) instanceof Enemy) {
-            Enemy physical = new Enemy(enemyList.get(random).getName(),
-            enemyList.get(random).getMaxHP(), enemyList.get(random).getItem());
-            return physical;
-        }
-        else {
+        if (enemyList.get(random) instanceof MagicalEnemy) {
             Enemy magical = new MagicalEnemy(enemyList.get(random).getName(),
             enemyList.get(random).getMaxHP(), enemyList.get(random).getItem());
             return magical;
+        }
+        else {
+            Enemy physical = new Enemy(enemyList.get(random).getName(),
+            enemyList.get(random).getMaxHP(), enemyList.get(random).getItem());
+            return physical;
         }
     }
 }
