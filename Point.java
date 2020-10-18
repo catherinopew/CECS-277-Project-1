@@ -67,33 +67,4 @@ public class Point {
         x = p.x;
         y = p.y;
     }
-
-    /** Adds the explicit point to the implicit point
-     * @param p point to be added
-     */
-    public void add(Point p) {
-        x += p.x;
-        y += p.y;
-    }
-    
-    /** String representation of a Point object
-     * @return String representation of this point
-     */
-    @Override
-    public String toString() {
-        return "(" + x + "," + y + ")";
-    }
-
-    /** Compares two Points to see if they are the same
-     * @param o object to compare to this point
-     * @return true if points are equal, false otherwise
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Point) {
-            Point p = (Point) o;
-            return x == p.x && y == p.y;
-        }
-        return false;
-    }
 }
