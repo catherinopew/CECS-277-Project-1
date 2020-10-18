@@ -19,7 +19,7 @@ public class Hero extends Entity implements Magical {
     public Hero (String n, Map m) {
         super(n, 25);
         map = m;
-        location = map.findStart();
+        location = map.findStart(); //puts hero at starting point of map
     }
 
     /** Displays the hero's current hp out of max hp 
@@ -27,7 +27,7 @@ public class Hero extends Entity implements Magical {
      */
     @Override
     public String toString() {
-        return super.toString(); 
+        return super.toString() + "\n" + itemsToString();
     }
 
     /** Displays the hero's current inventory
@@ -59,20 +59,21 @@ public class Hero extends Entity implements Magical {
             items.add(i);
             pickUp = true;
         }
-        else {
+        else { 
             System.out.println("Your inventory is full. Do you still want " + 
             "to pick up this item (Y/N)? ");
             boolean choice = CheckInput.getYesNo();
-            if (choice == true) {
-                System.out.println("Which item number would you like to drop? ");
+            if (choice == true) { //ask if user wants to replace an item
+                System.out.println("Which item number would you like to drop? " +
+                "\n" + itemsToString()); //show them the current inventory
                 int itemChoice = CheckInput.getIntRange(1, 5);
-                System.out.println("You've chosen to drop " + items.get(itemChoice - 1).getName() 
-                + " and replaced it with " + i.getName());
+                System.out.println("You've chosen to drop a " + items.get(itemChoice - 1).getName() 
+                + " and replaced it with a " + i.getName() + "."); //display message of what they dropped
                 dropItem(itemChoice - 1);
                 items.add(i);
                 pickUp = true;
             }
-            else {
+            else { //otherwise, display message that user chose to not replace anything
                 System.out.println("You've chosen to not replace any of " + 
                 "your inventory items.");
             }
@@ -80,11 +81,11 @@ public class Hero extends Entity implements Magical {
         return pickUp;
     }
 
-    /** The hero drinks the potion 
+    /** Allows the hero to drink a potion if it is in inventory
      * Once healed, remove potion from the inventory
      */
     public void drinkPotion() {
-        heal(getMaxHP());
+        heal(getMaxHP()); //heal with maxHP amount b/c potion is +25
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getName().equals("Health Potion")) {
                 dropItem(i);
@@ -126,6 +127,7 @@ public class Hero extends Entity implements Magical {
      */
     public char goNorth() {
         if (location.getX() == 0) {
+            System.out.println("You can't go there!"); //out of bounds message
             return map.getCharAtLoc(location);
         }
         else {
@@ -141,6 +143,7 @@ public class Hero extends Entity implements Magical {
      */
     public char goSouth() {
         if (location.getX() == 4) {
+            System.out.println("You can't go there!");
             return map.getCharAtLoc(location);
         }
         else {
@@ -156,6 +159,7 @@ public class Hero extends Entity implements Magical {
      */
     public char goEast() {
         if (location.getY() == 4) {
+            System.out.println("You can't go there!");
             return map.getCharAtLoc(location);
         }
         else {
@@ -171,6 +175,7 @@ public class Hero extends Entity implements Magical {
      */
     public char goWest() {
         if (location.getY() == 0) {
+            System.out.println("You can't go there!");
             return map.getCharAtLoc(location);
         }
         else {
@@ -187,7 +192,7 @@ public class Hero extends Entity implements Magical {
     @Override
     public String attack(Entity e) {
         Random rand = new Random();
-        int damage = rand.nextInt(5) + 1;
+        int damage = rand.nextInt(7) + 1; //random amount of damage 1-7
         e.takeDamage(damage);
 
         return getName() + " attacks " + e.getName() 
@@ -201,7 +206,7 @@ public class Hero extends Entity implements Magical {
     @Override
     public String magicMissile(Entity e) {
         Random rand = new Random();
-        int damage = rand.nextInt(5) + 1;
+        int damage = rand.nextInt(7) + 1;
         e.takeDamage(damage);
 
         return getName() + " hits " + e.getName() + " with a Magic Missle for "
@@ -215,7 +220,7 @@ public class Hero extends Entity implements Magical {
     @Override
     public String fireball(Entity e) {
         Random rand = new Random();
-        int damage = rand.nextInt(5) + 1;
+        int damage = rand.nextInt(7) + 1;
         e.takeDamage(damage);
 
         return getName() + " hits " + e.getName() + " with a Fireball for "
@@ -229,7 +234,7 @@ public class Hero extends Entity implements Magical {
     @Override
     public String thunderclap(Entity e) {
         Random rand = new Random();
-        int damage = rand.nextInt(5) + 1;
+        int damage = rand.nextInt(7) + 1;
         e.takeDamage(damage);
 
         return getName() + " zaps " + e.getName() + " with Thunderclap for "
