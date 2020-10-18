@@ -9,20 +9,19 @@ public class Map {
   /** A 2D array of boolean values */
   private boolean [][] revealed;
 
-  /** Constructs a 5 x 5 map and 
-   * Initializes all boolean values in revealed to false
-   */
+  /** Constructs a 5 x 5 map and 5 x 5 revealed */
   public Map() {
     map = new char [5][5];
     revealed = new boolean [5][5];
   }
 
-  /** Reads in the appropriate map file given the map number
+  /** Reads in and loads the appropriate map file given the map number
+   * and fills the 2D array with values
    * @param mapNum the map number
    */
   public void loadMap(int mapNum) {
     try {
-      if (mapNum > 3) {
+      if (mapNum > 3) { //beyond level 3, repeat first map, second, and so on
         if (mapNum % 3 == 1) {
           mapNum = 1;
         }
@@ -63,14 +62,14 @@ public class Map {
   public void displayMap(Point p) {
     for (int i = 0; i < map.length; i++) {
       for (int j = 0; j < map.length; j++) {
-        if (i == p.getX() && j == p.getY()) {
+        if (i == p.getX() && j == p.getY()) { //hero's current location
           System.out.print('*');
         }
-        else if (revealed[i][j] == true) {
+        else if (revealed[i][j] == true) { //reveal char underneath if hero visited
           System.out.print(map[i][j]);
         }
         else {
-          System.out.print('x');
+          System.out.print('x'); //hide the map chars underneath with x's
         }
         System.out.print(" ");
       }
@@ -104,6 +103,6 @@ public class Map {
    * @param p the point coordinates of the location
    */
   public void removeCharAtLoc(Point p) {
-    map[p.getX()][p.getY()] = 'n';
+    map[p.getX()][p.getY()] = 'n'; //'n' signifying that there is nothing there
   }
 }
