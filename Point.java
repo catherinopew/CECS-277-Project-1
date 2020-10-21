@@ -1,9 +1,9 @@
 /** Point class that represents a point */
 public class Point {
     /** Represents the x coordinate of this point */
-    private int x;
+    public int x;
     /** Represents the y coordinate of this point */
-    private int y;
+    public int y;
     
     /** Constructs a point at (0, 0) */
     public Point() {
